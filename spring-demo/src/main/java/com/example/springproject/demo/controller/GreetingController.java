@@ -1,6 +1,8 @@
 package com.example.springproject.demo.controller;
 
 import com.example.springproject.demo.entity.Greeting;
+import com.example.springproject.demo.service.IGreetingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,10 +19,13 @@ public class GreetingController {
     private static final String temp = "Hello,%s";
     private final AtomicInteger count = new AtomicInteger();
 
-    @ModelAttribute
-    public Greeting setGreeting() {
-        return new Greeting(1,"Hi");
-    }
+    @Autowired
+    private IGreetingService greetingService;
+
+//    @ModelAttribute
+//    public Greeting setGreeting() {
+//        return new Greeting(1,"Hi");
+//    }
 
     /**
      * @RequestParam  声明的方法参数和web参数进行绑定
@@ -86,6 +91,14 @@ public class GreetingController {
     @ModelAttribute
     public String processingGreetingHi(@RequestParam int id) {
         return null;
+    }
+
+    @GetMapping("/greeting/sayHelloToYou")
+    public String sayHelloToYou(@RequestParam("msg") String msg,@RequestParam("name") String name) {
+        System.out.println(msg);
+        System.out.println(name);
+        greetingService.sayHello(msg,name);
+        return "Ok";
     }
 }
 
