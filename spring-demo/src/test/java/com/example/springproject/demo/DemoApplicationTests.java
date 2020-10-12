@@ -86,5 +86,10 @@ class DemoApplicationTests {
         System.out.println(value);
     }
 
+    @Test
+    void test5(){
+        String str = new String();
+    }
+
 
 }
