@@ -6,4 +6,8 @@ package com.example.springproject.demo.service;
  * @description
  */
 public interface IHelloService {
+
+     String sayHelloToYou();
+
+     String throwExcepMethod();
 }

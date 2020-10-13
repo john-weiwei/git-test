@@ -2,6 +2,7 @@ package com.example.springproject.demo.interceptor;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Component;
 
 /**
  * @author ZhangWeiWei
@@ -10,7 +11,6 @@ import org.aspectj.lang.annotation.Pointcut;
  */
 @Aspect
 public class CommonPointCuts {
-
     //如果定义了方法，则连接点位于服务包或者子包下面
     @Pointcut("within(com.example.springproject.demo.service..*) ")
     public void inService() {

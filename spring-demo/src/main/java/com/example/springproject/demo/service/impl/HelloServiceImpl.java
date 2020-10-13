@@ -10,4 +10,19 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class HelloServiceImpl implements IHelloService {
+    @Override
+    public String sayHelloToYou() {
+        String hello = "hello man";
+        System.out.println(hello);
+        return hello;
+    }
+
+    @Override
+    public String throwExcepMethod() {
+        int dividend = 1;//被除数
+        int divisor = 0;//除数
+        int result = dividend / divisor;
+        System.out.println(result);
+        return String.valueOf(result);
+    }
 }

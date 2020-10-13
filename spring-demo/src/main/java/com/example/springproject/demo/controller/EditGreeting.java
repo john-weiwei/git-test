@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author ZhangWeiWei
@@ -27,9 +29,24 @@ public class EditGreeting {
     private IHelloService helloService;
 
     @GetMapping("/hello")
-    public String helloKity() {
+    public Object helloKity() {
+        String result = helloService.sayHelloToYou();
+        Map<String,Object> obj =  new HashMap<>();
+        obj.put("code",100);
+        obj.put("msg","成功");
+        obj.put("result",result);
+        return obj;
+    }
 
-        return "hi";
+
+    @GetMapping("/divisor")
+    public Object divisor() {
+        helloService.throwExcepMethod();
+        Map<String,Object> obj =  new HashMap<>();
+        obj.put("code",100);
+        obj.put("msg","成功");
+        obj.put("result","");
+        return obj;
     }
 
     @GetMapping("/greeting/sayHello")
