@@ -1,6 +1,7 @@
 package com.example.springproject.demo;
 
 import com.example.springproject.demo.entity.Greeting;
+import com.example.springproject.demo.entity.Hello;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.expression.EvaluationContext;
@@ -88,7 +89,15 @@ class DemoApplicationTests {
 
     @Test
     void test5(){
-        String str = new String();
+        String str = "123";
+        String s2 = new String("123");
+        String s1 = s2.intern();
+        System.out.println(s1);
+    }
+
+    void test6() {
+        Hello h1 = new Hello();
+        Hello h2 = new Hello();
     }
 
 

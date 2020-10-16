@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  * @date 2020/10/13 17:00
  * @description
  */
-@Component
+//@Component
 @Aspect("perthis(com.example.springproject.demo.interceptor.CommonPointCuts.inService())")
 public class AspectService {
 
