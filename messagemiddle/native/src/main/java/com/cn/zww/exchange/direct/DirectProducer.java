@@ -11,7 +11,9 @@ import java.util.concurrent.TimeoutException;
 /**
  * @author ZhangWeiWei
  * @date 2020/10/18 13:48
- * @description 消息生产者端
+ * @description 消息生产者端 direct 交换器
+ *  路由键完全匹配，direct是默认的交换器。声明一个队列时会自动绑定到默认的交换器上
+ *
  */
 public class DirectProducer {
 

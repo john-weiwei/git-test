@@ -12,6 +12,9 @@ import java.util.concurrent.TimeoutException;
  * @author ZhangWeiWei
  * @date 2020/10/18 22:05
  * @description fanout 交换器
+ * 广播的方式发送消息
+ * 消息广播到绑定的队列，不管队列绑定的是什么路由键，
+ * 消息经过交换器，每个队列都能收到
  */
 public class FanoutProducer {
 
@@ -33,7 +36,7 @@ public class FanoutProducer {
             //声明路由键
             String[] routeKeys = {"Allen","King","Mark"};
             //发送消息
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < 3; i++) {
                 String routeKey = routeKeys[i%3];
                 String msg = "Hello,RabbitMQ"+(i+1);
                 //发送消息
