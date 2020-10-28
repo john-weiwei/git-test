@@ -19,8 +19,6 @@ public class NormalConsumer {
         Connection connection = connectionFactory.newConnection();
         //信道
         Channel channel = connection.createChannel();
-        //声明交换器
-        channel.exchangeDeclare(DirectProducer.EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
         //声明一个队列
         String queueName = "Allen-queue";
         channel.queueDeclare(queueName,false,false,false,null);
