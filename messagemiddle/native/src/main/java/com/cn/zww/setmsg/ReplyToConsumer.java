@@ -17,7 +17,7 @@ public class ReplyToConsumer {
         connectionFactory.setHost(ReplyToProducer.HOST);
         Connection connection = connectionFactory.newConnection();
         final Channel channel = connection.createChannel();
-
+        //声明交换器
         channel.exchangeDeclare(ReplyToProducer.EXCHANGE_NAME, BuiltinExchangeType.TOPIC);
 
         String queueName = "replyTo";
@@ -29,6 +29,7 @@ public class ReplyToConsumer {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                 String message = new String(body,"UTF-8");
+                //消息生成属性
                 AMQP.BasicProperties responseProp = new AMQP.BasicProperties()
                         .builder()
                         .replyTo(properties.getReplyTo())
