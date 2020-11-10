@@ -1,5 +1,7 @@
 package com.example.springproject.demo.leetcode.array;
 
+import java.util.Map;
+
 /**
  * @Author:ZhangWeiWei
  * @Date:2020/11/2
@@ -24,7 +26,33 @@ package com.example.springproject.demo.leetcode.array;
  */
 public class RemoveDuplicates {
 
-    private static void removeDuplicates() {
+    /**
+     * 给定的数组是倒叙排序的
+     * 规律：前一个元素小于等于后一个元素
+     * @param nArr
+     */
+    private static int removeDuplicates(int[] nArr) {
+        int tempIndex = 0;
+        for (int i = 1; i < nArr.length; i++) {
+            if (nArr[tempIndex] != nArr[i]) {
+                tempIndex++;
+                nArr[tempIndex] = nArr[i];
+            }
+        }
+
+//        for (int i = 0; i < nArr.length; i++) {
+////            System.out.println(nArr[i]);
+////        }
+        return tempIndex+1;
+    }
+
+    public static void main(String[] args) {
+        int[] nArr = {0,0,1,1,1,2,2,3,3,4};
+        int result = removeDuplicates(nArr);
+        System.out.println("输出的数组长度:"+result);
+    }
+
+    private static void test() {
 
     }
 }
