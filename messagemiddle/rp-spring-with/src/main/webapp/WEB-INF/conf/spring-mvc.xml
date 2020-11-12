@@ -34,4 +34,50 @@
         <property name="defaultContentType" value="text/html" />
     </bean>
 
+<!--    配置消息转换-->
+    <bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+
+<!--    string 类型消息转换-->
+    <bean id="stringHttpMessageConverter"
+          class="org.springframework.http.converter.StringHttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <bean class="org.springframework.http.MediaType">
+                    <constructor-arg index="0" value="text" />
+                    <constructor-arg index="1" value="plain" />
+                    <constructor-arg index="2" value="UTF-8" />
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+<!-- 视图解析器 -->
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="order" value="0" />
+        <property name="contentNegotiationManager" ref="contentNegotiationManager" />
+        <!-- 视图解析 -->
+        <property name="viewResolvers">
+            <list>
+                <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+                <bean
+                        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                    <property name="viewClass"
+                              value="org.springframework.web.servlet.view.JstlView" />
+                    <property name="prefix" value="/WEB-INF/pages/" />
+                    <property name="suffix" value=".jsp"></property>
+                </bean>
+            </list>
+        </property>
+
+        <property name="defaultViews">
+            <list>
+                <bean
+                        class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+                    <property name="extractValueFromSingleKeyModel" value="true" />
+                </bean>
+            </list>
+        </property>
+    </bean>
+
 </beans>
