@@ -12,6 +12,7 @@
         <module>native</module>
         <module>rp-spring-with</module>
         <module>rp-spring-with-consumer</module>
+        <module>rp-spring-with-consumer</module>
     </modules>
 
     <dependencies>
