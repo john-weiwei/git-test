@@ -13,7 +13,9 @@
         <module>rp-spring-with</module>
         <module>rp-spring-with-consumer</module>
         <module>rp-spring-with-consumer</module>
+        <module>rp-springboot-with</module>
     </modules>
+
 
     <dependencies>
 <!--        rabbit mq 原生客户端-->
