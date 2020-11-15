@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 查找最新的schemaLocation 访问 http://www.springframework.org/schema/ -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-4.0.xsd
+           http://www.springframework.org/schema/rabbit
+           http://www.springframework.org/schema/rabbit/spring-rabbit-2.0.xsd">
+
+<!--  p配置包扫描路径-->
+  <context:component-scan base-package="com.cn.zww">
+<!--    只扫描Service，也可以添加Repostory，但是要把Controller排除在外，Controller由spring-mvc.xml去加载-->
+<!--    <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>-->
+    <!-- <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" /> -->
+    <!--<context:include-filter type="annotation" expression="org.springframework.stereotype.Component" />-->
+    <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+  </context:component-scan>
+
+<!--  rabbitmq 配置-->
+  <bean id="rabbitConnectionFactory" class="org.springframework.amqp.rabbit.connection.CachingConnectionFactory">
+    <constructor-arg value="127.0.0.1"/>
+    <property name="username" value="guest"/>
+    <property name="password" value="guest"/>
+    <property name="channelCacheSize" value="8"/>
+    <property name="port" value="5672"/>
+  </bean>
+
+  <!-- rabbit 的管理权限配置 -->
+  <rabbit:admin connection-factory="rabbitConnectionFactory"/>
+
+<!--  fanout交换器-->
+<!--  声明队列-->
+  <rabbit:queue name = "h1_queue" durable="false"/>
+  <rabbit:queue name = "h2_queue" durable="false"/>
+  <rabbit:queue name = "h3_queue" durable="false"/>
+<!--  将队列绑定到交换器-->
+<rabbit:fanout-exchange name="fanout-exchange" xmlns="http://www.springframework.org/schema/rabbit" durable="false">
+  <rabbit:bindings>
+    <rabbit:binding queue="h1_queue"/>
+    <rabbit:binding queue="h2_queue"/>
+    <rabbit:binding queue="h3_queue"/>
+  </rabbit:bindings>
+</rabbit:fanout-exchange>
+<!--fanout 交换器结束-->
+
+<!--  topic 交换器-->
+<!--  定义队列-->
+  <rabbit:queue name="all_queue" durable="false"/>
+  <rabbit:queue name="all_kafka_queue" durable="false"/>
+  <rabbit:queue name="king_kafka_queue" durable="false"/>
+  <rabbit:queue name="king_all_queue" durable="false"/>
+<!--  绑定交换器 -->
+  <rabbit:topic-exchange name="topic-exchange" xmlns="http://www.springframework.org/schema/rabbit" durable="false">
+    <rabbit:bindings>
+      <rabbit:binding pattern="#" queue="all_queue"/>
+      <rabbit:binding pattern="*.kafka" queue="all_kafka_queue"/>
+      <rabbit:binding pattern="king.kafka" queue="king_kafka_queue"/>
+      <rabbit:binding pattern="king.*" queue="king_all_queue"/>
+    </rabbit:bindings>
+  </rabbit:topic-exchange>
+<!--  topic 交换器结束-->
+
+<!--  消费者定义-->
+  <bean id="h1_service" class="com.cn.zww.service.fanout.H1_Service"/>
+  <bean id="h2_service" class="com.cn.zww.service.fanout.H2_Service"/>
+  <bean id="h3_service" class="com.cn.zww.service.fanout.H3_Service"/>
+
+<!--  消费监听 -->
+  <rabbit:listener-container connection-factory="rabbitConnectionFactory">
+<!--    配置文件，消费者监听对应的队列（fanout类型交换器绑定的队列）-->
+    <rabbit:listener ref="h1_service" queues="h1_queue" method="onMessage"/>
+    <rabbit:listener ref="h2_service" queues="h2_queue" method="onMessage"/>
+    <rabbit:listener ref="h3_service" queues="h3_queue" method="onMessage"/>
+<!--    直接方式，消费者监听对应的队列（topic类型交换器绑定的队列）-->
+    <rabbit:listener ref="allTopicService" queues="all_queue" method="onMessage"/>
+    <rabbit:listener ref="allKafkaTopicService" queues="all_kafka_queue" method="onMessage"/>
+    <rabbit:listener ref="kingAllTopicService" queues="king_all_queue" method="onMessage"/>
+    <rabbit:listener ref="kingKafkaTopicService" queues="king_kafka_queue" method="onMessage"/>
+  </rabbit:listener-container>
+
+</beans>

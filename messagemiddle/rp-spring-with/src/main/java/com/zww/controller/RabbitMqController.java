@@ -47,4 +47,32 @@ public class RabbitMqController {
         }
         return opt;
     }
+
+
+    @ResponseBody
+    @RequestMapping("/topicSender")
+    public String topicSender(@RequestParam("message")String message){
+        String opt="";
+        try {
+            String[] routekeys={"king","mark","james"};
+            String[] modules={"kafka","jvm","redis"};
+            for(int i=0;i<routekeys.length;i++){
+                for(int j=0;j<modules.length;j++){
+                    String routeKey = routekeys[i]+"."+modules[j];
+                    String str = "Topic,the message_["+i+","+j+"] is [rk:"+routeKey+"][msg:"+message+"]";
+                    log.info("**************************Send Message:["+str+"]");
+                    //todo 生产者发送消息 属性可以自由配置
+                    MessageProperties messageProperties = new MessageProperties();
+                    rabbitTemplate.send("topic-exchange",
+                            routeKey,
+                            new Message(str.getBytes(), messageProperties));
+                }
+            }
+            opt = "suc";
+        } catch (Exception e) {
+            opt = e.getCause().toString();
+        }
+        return opt;
+    }
+
 }
