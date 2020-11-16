@@ -1,11 +1,14 @@
 package com.cn.zww.config;
 
 import com.cn.zww.constant.RmConst;
+import com.cn.zww.hello.UserReceiver;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -37,6 +40,9 @@ public class RabbitConfig {
 
     @Value("${spring.rabbitmq.publisher-confirms}")
     private boolean publisherConfirm;
+
+    @Autowired
+    private UserReceiver userReceiver;
 
     /**
      * 构建连接工厂
@@ -114,6 +120,19 @@ public class RabbitConfig {
             String msg = new String(message.getBody());
             System.out.println("Message : "+msg);
         };
+    }
+
+    // TODO: 2020/11/16 消费者确认，手动应答
+    @Bean
+    public SimpleMessageListenerContainer messageContainer() {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory());
+        //绑定队列
+        container.setQueues(userQueue());
+        //设定消息确认模式
+        container.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+        //消息确认，绑定监听器
+        container.setMessageListener(userReceiver);
+        return container;
     }
 
     // 声明队列------使用RabbitMQ缺省交换器（TopicExchange）

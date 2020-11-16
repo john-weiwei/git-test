@@ -19,6 +19,7 @@ public class DefaultSender {
     public void send(String msg) {
         String message = msg + "-----" + System.currentTimeMillis();
         System.out.println("Sender : "+msg);
-        rabbitTemplate.convertAndSend(RmConst.QUEUE_HELLO,message);
+//        rabbitTemplate.convertAndSend(RmConst.QUEUE_HELLO,message);
+        this.rabbitTemplate.convertAndSend(RmConst.QUEUE_USER,message);
     }
 }

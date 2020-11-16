@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * fanout 消息接收端
  */
 @Component
-@RabbitListener(queues = "sb.*.fanout")
+@RabbitListener(queues = "sb.fanout.A")
 public class FanoutReceiver {
 
     @RabbitHandler
