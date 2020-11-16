@@ -14,6 +14,8 @@
         <module>rp-spring-with-consumer</module>
         <module>rp-spring-with-consumer</module>
         <module>rp-springboot-with</module>
+        <module>rp-depot</module>
+        <module>rp-order</module>
     </modules>
 
 
