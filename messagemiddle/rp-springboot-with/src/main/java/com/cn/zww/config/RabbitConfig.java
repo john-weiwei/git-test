@@ -1,7 +1,7 @@
 package com.cn.zww.config;
 
 import com.cn.zww.constant.RmConst;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
@@ -132,6 +132,71 @@ public class RabbitConfig {
         return new Queue(RmConst.QUEUE_USER);
     }
 
+//    =========topic交换器  start===========
+//    声明队列
+    @Bean
+    public Queue queueEmailMessage() {
+        return new Queue(RmConst.QUEUE_TOPIC_EMAIL);
+    }
+
+    @Bean
+    public Queue queueUserMessage() {
+        return new Queue(RmConst.QUEUE_TOPIC_USER);
+    }
+
+//    声明交换器
+    @Bean
+    public TopicExchange topicExchange() {
+        return new TopicExchange(RmConst.EXCHANGE_TOPIC);
+    }
+
+//    绑定队列到交换器
+    @Bean
+    public Binding bindingEmailExchange() {
+        return BindingBuilder
+                .bind(queueEmailMessage())
+                .to(topicExchange())
+                .with("sb.*.email");
+    }
+
+    @Bean
+    public Binding bindingUserExchange() {
+        return BindingBuilder
+                .bind(queueUserMessage())
+                .to(topicExchange())
+                .with("sb.*.user");
+    }
+//   =========topic交换器 end=============
+
+//    ===========fanout交换器 start=========
+//    声明队列
+    @Bean
+    public Queue AMessage() {
+        return new Queue("sb.fanout.A");
+    }
+
+//    声明交换器
+    @Bean
+    public FanoutExchange fanoutExchange() {
+        return new FanoutExchange(RmConst.EXCHANGE_FANOUT);
+    }
+
+//    绑定关系
+    @Bean
+    public Binding bindingFanoutMessage() {
+        return BindingBuilder
+                .bind(AMessage())
+                .to(fanoutExchange());
+    }
+//    ===========fanout交换器 end=========
+
 
 
 }
+
+
+
+
+
+
+
