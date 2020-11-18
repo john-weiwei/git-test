@@ -16,7 +16,7 @@ public class ProcessOrder {
     //TODO 调用方式
     @Autowired
     @Qualifier("mq")   //使用mq的方式
-    //@Qualifier("rpc")    //使用rpc的方式
+//    @Qualifier("rpc")    //使用rpc的方式
     private IProDepot proDepot;
 
     public void processOrder(String goodsId,int amount){

@@ -18,7 +18,6 @@
         <module>rp-order</module>
     </modules>
 
-
     <dependencies>
 <!--        rabbit mq 原生客户端-->
         <!-- https://mvnrepository.com/artifact/com.rabbitmq/amqp-client -->

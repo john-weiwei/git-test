@@ -19,7 +19,7 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="0">
-    <script type="text/javascript" src="<%--<%=basePath%>--%>resources/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="<%--<%=basePath%>--%>js/jquery-1.11.0.min.js"></script>
     <style type="text/css">
         .h1 {
             margin: 0 auto;

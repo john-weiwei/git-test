@@ -27,7 +27,6 @@
                                 expression="org.springframework.stereotype.Controller" />-->
     </context:component-scan>
 
-
     <bean id="stringHttpMessageConverter"
           class="org.springframework.http.converter.StringHttpMessageConverter">
         <property name="supportedMediaTypes">
