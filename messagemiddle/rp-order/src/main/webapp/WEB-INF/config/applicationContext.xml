@@ -36,18 +36,22 @@
         <property name="publisherConfirms" value="true"></property>
 
 	</bean>
+<!--	权限-->
 	<rabbit:admin connection-factory="rabbitConnectionFactory"/>
 
+<!--	队列-->
 	<rabbit:queue name="depot_queue" durable="true"/>
 
+<!--	交换器-->
 	<rabbit:direct-exchange name="depot-amount-exchange"
           xmlns="http://www.springframework.org/schema/rabbit"
                             durable="true">
+<!--		绑定关系-->
 		<rabbit:bindings>
 			<rabbit:binding queue="depot_queue" key="amount.depot" ></rabbit:binding>
 		</rabbit:bindings>
 	</rabbit:direct-exchange>
-
+<!-- 使用template -->
 	<rabbit:template id="rabbitTemplate"
 					 connection-factory="rabbitConnectionFactory"
     mandatory="true"
@@ -56,6 +60,7 @@
 	<!--发送者消息确认回调 -->
 
 	</rabbit:template>
+
 
 
 </beans>

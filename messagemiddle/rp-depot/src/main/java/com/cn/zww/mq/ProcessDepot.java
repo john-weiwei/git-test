@@ -32,7 +32,7 @@ public class ProcessDepot implements ChannelAwareMessageListener {
             GoodTransferVo goodTransferVo = gson.fromJson(msg,GoodTransferVo.class);
             try {
                 depotManager.operDepot(goodTransferVo);
-                //throw new RuntimeException("库存系统异常了！！！！！");
+//                throw new RuntimeException("库存系统异常了！！！！！");
                 channel.basicAck(message.getMessageProperties().getDeliveryTag(),
                         false);
                 logger.info(">>>>>>>>>>>>>>库存处理完成，应答Mq服务");
