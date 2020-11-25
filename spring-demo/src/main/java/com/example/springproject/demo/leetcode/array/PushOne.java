@@ -17,28 +17,31 @@ package com.example.springproject.demo.leetcode.array;
  * 输入：digits = [1,2,3]
  * 输出：[1,2,4]
  * 解释：输入数组表示数字 123。
- *
+ *  两种情况
+ *  1、数组中全部元素都是9，新数组长度需要+1
+ *  2、所有元素不全为9
  */
 public class PushOne {
     private static int[] pushOne(int[] digits) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < digits.length; i++) {
-            sb.append(digits[i]);
+        int len = digits.length;
+        for (int i = len-1; i >= 0 ; i--) {
+            if (digits[i] != 9) {
+                digits[i]++;
+                return digits;
+            } else {
+                digits[i] = 0;
+            }
         }
-        int num = Integer.parseInt(sb.toString());
-        num += 1;
-        String strNum = String.valueOf(num);
-        int len = strNum.length();
-        int[] result = new int[len];
-        for (int i = 0; i < strNum.length(); i++) {
-            result[i] = Integer.parseInt(String.valueOf(strNum.charAt(i)));
-        }
+        //如果继续往下执行，则数组中的所有元素都是9
+        int[] result = new int[len + 1];
+        result[0] = 1;
         return result;
     }
 
     public static void main(String[] args) {
 //        int[] digits = {1,2,3};
-        int[] digits = {9,8,7,6,5,4,3,2,1,0};
+        int[] digits = {9,9,9};
+//        int[] digits = {9,8,7,6,5,4,3,2,1,0};
         int[] result = pushOne(digits);
         for (int item: result
              ) {
