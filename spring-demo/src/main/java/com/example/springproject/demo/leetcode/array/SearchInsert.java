@@ -23,11 +23,33 @@ package com.example.springproject.demo.leetcode.array;
  *
  * 输入: [1,3,5,6], 0
  * 输出: 0
+ *
+ * 使用二分查找法，边界值问题
  */
 public class SearchInsert {
 
     public static int searchInsert(int[] nums,int target) {
+        int left = 0;
+        int right = nums.length -1;
+        //边界值[left,right],left可以等于right
+        while (left <= right) {
+            //求中间值
+            int middle = left + ((right-left)/2);
+            if (nums[middle] > target) {
+                right = middle - 1;
+            } else if (nums[middle] < target) {
+                left = middle + 1;
+            } else {
+                return middle;
+            }
+        }
+        return right+1;
+    }
 
-        return 0;
+    public static void main(String[] args) {
+        int[] nums = {1,3,5,6};
+        int target = 0;
+        int result = searchInsert(nums,target);
+        System.out.println(result);
     }
 }
