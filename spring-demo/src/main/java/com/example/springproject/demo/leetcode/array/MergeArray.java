@@ -21,21 +21,23 @@ package com.example.springproject.demo.leetcode.array;
  * nums2 = [2,5,6],       n = 3
  *
  * 输出：[1,2,2,3,5,6]
- *
+ * 归并排序
  */
 public class MergeArray {
-    private static int[] merge(int[] num1,int m,int[] num2,int n) {
+    private static void merge(int[] num1,int m,int[] num2,int n) {
         //将第一个数组作为合并后的数组容器
         int num1Len = m - 1; //num1
         int num2Len = n - 1; //num2
+        int tempNum = m + n - 1;
         while (num1Len >= 0 && num2Len >= 0) {
             if (num1[num1Len] < num2[num2Len]) {
-                num1[num1Len + num2Len + 2] = num2[num2Len];
+                num1[tempNum] = num2[num2Len];
                 num2Len--;
             } else {
-                num1[num1Len + num2Len + 2] = num1[num1Len];
+                num1[tempNum] = num1[num1Len];
                 num1Len--;
             }
+            tempNum--;
         }
         //处理剩余的数据,如果剩下的是num1中的数据，则留在其中。
         //如果是num2中的数据，则倒叙填充
@@ -43,15 +45,18 @@ public class MergeArray {
             num1[num2Len] = num2[num2Len];
             num2Len--;
         }
-        return num1;
+
+        for (int i = 0; i < num1.length; i++) {
+            System.out.println(num1[i]);
+        }
     }
 
     public static void main(String[] args) {
         int[] num1 = {1,2,3};
         int[] num2 = {2,5,6};
-        int[] result = merge(num1,num1.length,num2,num2.length);
-        for (int i = 0; i < result.length; i++) {
-            System.out.println(result[i]);
-        }
+        int[] newNum1 = new int[num1.length+num2.length];
+        System.arraycopy(num1,0,newNum1,0,num1.length);
+        merge(newNum1,num1.length,num2,num2.length);
+
     }
 }
