@@ -22,6 +22,7 @@ public class RemoveElement {
     //输入的数据通常会被输出的部分覆盖
     private static int removeElement(int[] nums,int val) {
         int tempIndex = 0;
+<<<<<<< HEAD
         int size = nums.length;
         while (tempIndex < size) {
             if (nums[tempIndex] == val) {
@@ -49,15 +50,33 @@ public class RemoveElement {
             System.out.println(nums[i]);
         }
         return result;
+=======
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != val) {
+                tempIndex++;
+            } else {
+                nums[i] = nums[tempIndex+1];
+            }
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            System.out.println(nums[i]);
+        }
+        return tempIndex-1;
+>>>>>>> a25d19730c05c8b28d3d59f12440172853930829
     }
 
     public static void main(String[] args) {
 //        int[] nums = {3,2,2,3};
         int[] nums = {0,1,2,2,3,0,4,2};
+<<<<<<< HEAD
 //        int result = removeElement(nums,2);
         int result = removeElementBest(nums,2);
 
 
+=======
+        int result = removeElement(nums,2);
+>>>>>>> a25d19730c05c8b28d3d59f12440172853930829
         System.out.println("输出转换后的长度："+result);
     }
 }

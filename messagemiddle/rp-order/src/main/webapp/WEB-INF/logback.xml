@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
+<<<<<<< HEAD
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <!--<Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>-->
@@ -9,13 +10,60 @@
     </appender>
 
     <logger name="com.cn" level="debug" />
+=======
+<!--    日志名称-->
+    <contextName>messageMiddle-log</contextName>
+
+<!--    自定义属性-->
+    <property name="pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg %n"/>
+    <property name="pattern-color" value="%yellow(%d{yyyy-MM-ss HH:mm:ss.SSS}) [%thread] %highlight(%-5level) %green(%logger{50}) %%highlight(%msg) 5n"/>
+    <property name="LOG_HOME" value="logs"/>
+
+<!--    控制台输出-->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>${pattern}</Pattern>
+        </encoder>
+    </appender>
+<!--    带有颜色的控制台输出-->
+    <appender name="CONSOLE-COLOR" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>${pattern-color}</Pattern>
+        </encoder>
+    </appender>
+
+<!--    输出到文件-->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingProlicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/messageMiddle.%d.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory>
+        </rollingProlicy>
+        <encoder>
+            <Pattern>${pattern}</Pattern>
+        </encoder>
+    </appender>
+
+<!--    logger节点指定包或类的日志配置-->
+    <logger name="com.cn.zww" level="info" />
+>>>>>>> a25d19730c05c8b28d3d59f12440172853930829
     <logger name="org.springframework">
         <level value="error" />
         <additivity value="false" />
     </logger>
 
+<<<<<<< HEAD
     <root level="debug">
         <appender-ref ref="STDOUT" />
+=======
+<!--    root节点启用配置-->
+    <root level="info">
+<!--        <appender-ref ref="CONSOLE" />-->
+        <appender-ref ref="CONSOLE-COLOR" />
+        <appender-ref ref="FILE" />
+>>>>>>> a25d19730c05c8b28d3d59f12440172853930829
     </root>
 
 </configuration>

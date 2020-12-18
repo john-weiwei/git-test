@@ -5,11 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     <groupId>org.example</groupId>
     <artifactId>rp-springboot-with</artifactId>
     <version>1.0-SNAPSHOT</version>
 
 =======
+=======
+>>>>>>> a25d19730c05c8b28d3d59f12440172853930829
     <artifactId>rp-springboot-with</artifactId>
 
     <parent>
@@ -52,6 +55,9 @@
             </plugin>
         </plugins>
     </build>
+<<<<<<< HEAD
 >>>>>>> 48c640ed68b4463dd0eb974902f9f6ec72ca1958
+=======
+>>>>>>> a25d19730c05c8b28d3d59f12440172853930829
 
 </project>

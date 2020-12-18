@@ -1,7 +1,14 @@
 package com.cn.zww.aspect;
 
 import com.google.gson.Gson;
+<<<<<<< HEAD
 import org.aspectj.lang.ProceedingJoinPoint;
+=======
+import com.oracle.javafx.jmx.json.JSONDocument;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.AfterThrowing;
+>>>>>>> a25d19730c05c8b28d3d59f12440172853930829
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -71,4 +78,46 @@ public class LogAspect {
         }
         return requestParms;
     }
+<<<<<<< HEAD
+=======
+
+    /**
+     * 抛异常处理的日志
+     * @param joinPoint
+     * @param e
+     * @return
+     */
+    @AfterThrowing(pointcut = "requestServer()",throwing = "e")
+    public void doThrowing(JoinPoint joinPoint,RuntimeException e) {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+        RequestErrorInfo requestErrorInfo = new RequestErrorInfo();
+        requestErrorInfo.setIp(request.getRemoteAddr());
+        requestErrorInfo.setUrl(request.getRequestURI());
+        requestErrorInfo.setHttpMethod(request.getMethod());
+        requestErrorInfo.setClassName(String.format("%s.%s",joinPoint.getSignature().getDeclaringTypeName(),joinPoint.getSignature().getName()));
+        requestErrorInfo.setException(e);
+        requestErrorInfo.setRequestParams(getRequestParamsByJoinPoint(joinPoint));
+        LOGGER.info("Error request info {}:"+ new Gson().toJson(requestErrorInfo));
+    }
+
+    private Map<String, Object> getRequestParamsByJoinPoint(JoinPoint joinPoint) {
+        Map<String,Object> requestParms = new HashMap<>();
+        //参数名
+        String[] paramNames = ((MethodSignature)joinPoint.getSignature()).getParameterNames();
+        //参数值
+        Object[] paramValues = joinPoint.getArgs();
+
+        for (int i = 0; i < paramNames.length; i++) {
+            Object value = paramValues[i];
+            //如果是文件对象
+            if (value instanceof MultipartFile) {
+                MultipartFile multipartFile = (MultipartFile) value;
+                value = multipartFile.getOriginalFilename();//获取文件名
+            }
+            requestParms.put(paramNames[i],value);
+        }
+        return requestParms;
+    }
+>>>>>>> a25d19730c05c8b28d3d59f12440172853930829
 }

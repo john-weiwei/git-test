@@ -21,7 +21,11 @@ import java.util.Map;
  * @description
  */
 @Component
+<<<<<<< HEAD
 @Aspect
+=======
+//@Aspect
+>>>>>>> a25d19730c05c8b28d3d59f12440172853930829
 public class RequestLogAspect {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RequestLogAspect.class);

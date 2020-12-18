@@ -36,6 +36,7 @@
         <property name="publisherConfirms" value="true"></property>
 
 	</bean>
+<<<<<<< HEAD
 	<rabbit:admin connection-factory="rabbitConnectionFactory"/>
 
 	<rabbit:queue name="depot_queue" durable="true"/>
@@ -43,11 +44,28 @@
 	<rabbit:direct-exchange name="depot-amount-exchange"
           xmlns="http://www.springframework.org/schema/rabbit"
                             durable="true">
+=======
+<!--	权限-->
+	<rabbit:admin connection-factory="rabbitConnectionFactory"/>
+
+<!--	队列-->
+	<rabbit:queue name="depot_queue" durable="true"/>
+
+<!--	交换器-->
+	<rabbit:direct-exchange name="depot-amount-exchange"
+          xmlns="http://www.springframework.org/schema/rabbit"
+                            durable="true">
+<!--		绑定关系-->
+>>>>>>> a25d19730c05c8b28d3d59f12440172853930829
 		<rabbit:bindings>
 			<rabbit:binding queue="depot_queue" key="amount.depot" ></rabbit:binding>
 		</rabbit:bindings>
 	</rabbit:direct-exchange>
+<<<<<<< HEAD
 
+=======
+<!-- 使用template -->
+>>>>>>> a25d19730c05c8b28d3d59f12440172853930829
 	<rabbit:template id="rabbitTemplate"
 					 connection-factory="rabbitConnectionFactory"
     mandatory="true"
@@ -58,4 +76,8 @@
 	</rabbit:template>
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> a25d19730c05c8b28d3d59f12440172853930829
 </beans>
